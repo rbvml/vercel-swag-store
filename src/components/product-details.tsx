@@ -1,14 +1,5 @@
-import { Product } from "@/types";
-import { cacheLife, cacheTag } from "next/cache";
-import { api } from "@/lib/api";
 import Image from "next/image";
-
-async function getProductDetails(slug: string) {
-  "use cache";
-  cacheLife("hours");
-  cacheTag(`product-${slug}`);
-  return api<Product>(`/products/${slug}`);
-}
+import { getProductDetails } from "@/lib/products";
 
 export default async function ProductDetails({
   slug,

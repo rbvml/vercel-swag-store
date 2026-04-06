@@ -2,6 +2,27 @@ import { Suspense } from "react";
 import ProductDetails from "@/components/product-details";
 import AddToCart from "@/components/add-to-cart";
 import { AddToCartSkeleton } from "@/components/add-to-cart";
+import type { Metadata } from "next";
+import { getProductDetails } from "@/lib/products";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const { name, description, images } = await getProductDetails(slug);
+
+  return {
+    title: name,
+    description,
+    openGraph: {
+      title: name,
+      description,
+      images,
+    },
+  };
+}
 
 export default function ProductDetailsPage({
   params,
