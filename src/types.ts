@@ -11,3 +11,9 @@ export type Product = {
   featured: boolean;
   createdAt: string;
 };
+
+export type Stock = {
+  stock: number;
+  inStock: boolean;
+  lowStock: boolean;
+};
