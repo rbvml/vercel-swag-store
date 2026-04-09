@@ -1,24 +1,22 @@
 import { api } from "@/lib/api";
 import StockIndicator from "./stock-indicator";
+import AddToCartForm from "./add-to-cart-form";
 import type { Stock } from "@/types";
-import QuantitySelector from "./quantity-selector";
 
-export default async function AddToCart({ slug }: { slug: string }) {
-  const { stock, inStock, lowStock } = await api<Stock>(
-    `/products/${slug}/stock`
-  );
+export default async function AddToCart({
+  slug,
+  productId,
+}: {
+  slug: string;
+  productId: string;
+}) {
+  const { data } = await api<Stock>(`/products/${slug}/stock`);
+  const { stock, inStock, lowStock } = data;
 
   return (
     <>
       <StockIndicator inStock={inStock} lowStock={lowStock} stock={stock} />
-      <QuantitySelector max={stock} disabled={!inStock} />
-      <button
-        disabled={!inStock}
-        className="mt-8 bg-black px-6 py-3 text-sm font-medium text-white hover:bg-gray-800 disabled:bg-gray-300
-  disabled:cursor-not-allowed"
-      >
-        Add to Cart
-      </button>
+      <AddToCartForm productId={productId} maxQuantity={stock} inStock={inStock} />
     </>
   );
 }
