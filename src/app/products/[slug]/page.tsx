@@ -4,6 +4,30 @@ import AddToCart from "@/components/add-to-cart";
 import { AddToCartSkeleton } from "@/components/add-to-cart";
 import type { Metadata } from "next";
 import { getProductDetails } from "@/lib/products";
+import { api } from "@/lib/api";
+import type { Product } from "@/types";
+
+export async function generateStaticParams() {
+  const { data } = await api<Product[]>("/products?limit=100");
+  return data.map((product) => ({ slug: product.slug }));
+}
+
+async function ProductContent({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const product = await getProductDetails(slug);
+
+  return (
+    <ProductDetails product={product}>
+      <Suspense fallback={<AddToCartSkeleton />}>
+        <AddToCart slug={slug} productId={product.id} />
+      </Suspense>
+    </ProductDetails>
+  );
+}
 
 export async function generateMetadata({
   params,
@@ -30,16 +54,8 @@ export default function ProductDetailsPage({
   params: Promise<{ slug: string }>;
 }) {
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-      <Suspense fallback={<div>Loading...</div>}>
-        {params.then(({ slug }) => (
-          <ProductDetails slug={slug}>
-            <Suspense fallback={<AddToCartSkeleton />}>
-              <AddToCart slug={slug} />
-            </Suspense>
-          </ProductDetails>
-        ))}
-      </Suspense>
-    </div>
+    <Suspense fallback={null}>
+      <ProductContent params={params} />
+    </Suspense>
   );
 }
