@@ -1,16 +1,24 @@
 import { Suspense } from "react";
 import SearchForm from "@/components/search-form";
-import SearchResults, { SearchResultsSkeleton } from "@/components/search-results";
+import SearchResults, {
+  SearchResultsSkeleton,
+} from "@/components/search-results";
 import { api } from "@/lib/api";
 import { cacheLife, cacheTag } from "next/cache";
 import type { Metadata } from "next";
 import type { Category } from "@/types";
 
+type SearchPageParams = {
+  q?: string;
+  category?: string;
+};
+
 async function getCategories() {
   "use cache";
   cacheLife("days");
   cacheTag("categories");
-  return api<Category[]>("/categories");
+  const { data } = await api<Category[]>("/categories");
+  return data;
 }
 
 export const metadata: Metadata = {
@@ -20,7 +28,7 @@ export const metadata: Metadata = {
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; category?: string }>;
+  searchParams: Promise<SearchPageParams>;
 }) {
   const categories = await getCategories();
   const sortedCategories = [...categories].sort((a, b) =>
@@ -33,21 +41,19 @@ export default async function SearchPage({
 
       <div className="mt-8">
         <Suspense fallback={<div className="h-10" />}>
-          {searchParams.then(({ q, category }) => (
+          {searchParams.then(({ q = "", category = "" }) => (
             <SearchForm
-              key={`${q ?? ""}-${category ?? ""}`}
+              key={`${q}-${category}`}
               categories={sortedCategories}
-              initialQuery={q ?? ""}
-              initialCategory={category ?? ""}
+              initialQuery={q}
+              initialCategory={category}
             />
           ))}
         </Suspense>
       </div>
 
       <Suspense fallback={<SearchResultsSkeleton />}>
-        {searchParams.then(({ q, category }) => (
-          <SearchResults q={q} category={category} />
-        ))}
+        <SearchResults searchParams={searchParams} />
       </Suspense>
     </div>
   );

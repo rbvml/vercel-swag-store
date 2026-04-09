@@ -1,8 +1,4 @@
-type Stock = {
-  stock: number;
-  inStock: boolean;
-  lowStock: boolean;
-};
+import type { Stock } from "@/types";
 
 function getStockStatus(inStock: boolean, lowStock: boolean, stock: number) {
   if (!inStock) return { label: "Out of stock", color: "text-red-500" };

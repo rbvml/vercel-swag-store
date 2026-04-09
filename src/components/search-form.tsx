@@ -53,12 +53,12 @@ export default function SearchForm({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search products..."
-        className="flex-1 border border-gray-300 px-4 py-2 text-sm"
+        className="flex-1 rounded-md border border-gray-300 px-4 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
       />
       <select
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="border border-gray-300 px-4 py-2 text-sm"
+        className="rounded-md border border-gray-300 px-4 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
       >
         <option value="">All categories</option>
         {categories.map((c) => (
@@ -70,7 +70,7 @@ export default function SearchForm({
       <button
         type="submit"
         disabled={isPending}
-        className="bg-black px-6 py-2 text-sm font-medium text-white hover:bg-gray-800 disabled:bg-gray-400"
+        className="min-w-32 rounded-md bg-black px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 active:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:bg-gray-400"
       >
         {isPending ? "Searching..." : "Search"}
       </button>

@@ -14,16 +14,16 @@ async function searchProducts(q?: string, category?: string) {
   if (q) params.set("search", q);
   if (category) params.set("category", category);
 
-  return api<Product[]>(`/products?${params.toString()}`);
+  const { data } = await api<Product[]>(`/products?${params.toString()}`);
+  return data;
 }
 
 export default async function SearchResults({
-  q,
-  category,
+  searchParams,
 }: {
-  q?: string;
-  category?: string;
+  searchParams: Promise<{ q?: string; category?: string }>;
 }) {
+  const { q, category } = await searchParams;
   const products = await searchProducts(q, category);
 
   if (products.length === 0) {
