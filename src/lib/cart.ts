@@ -1,0 +1,24 @@
+import { cookies } from "next/headers";
+import { api } from "@/lib/api";
+import type { Cart } from "@/types";
+
+const CART_COOKIE = "cart_token";
+
+export async function getCartToken(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get(CART_COOKIE)?.value ?? null;
+}
+
+export async function getCart(): Promise<Cart | null> {
+  const token = await getCartToken();
+  if (!token) return null;
+
+  try {
+    const { data } = await api<Cart>("/cart", {
+      headers: { "x-cart-token": token },
+    });
+    return data;
+  } catch {
+    return null;
+  }
+}

@@ -23,3 +23,21 @@ export type Category = {
   name: string;
   productCount: number;
 };
+
+export type CartItem = {
+  productId: string;
+  quantity: number;
+  addedAt: string;
+  product: Product;
+  lineTotal: number;
+};
+
+export type Cart = {
+  token: string;
+  items: CartItem[];
+  totalItems: number;
+  subtotal: number;
+  currency: string;
+  createdAt: string;
+  updatedAt: string;
+};

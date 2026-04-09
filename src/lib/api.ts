@@ -1,14 +1,32 @@
-const API_URL =
-  process.env.API_URL || "https://vercel-swag-store-api.vercel.app/api";
+const API_URL = process.env.API_URL;
 const API_BYPASS_TOKEN = process.env.API_BYPASS_TOKEN || "";
 
-export async function api<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_URL}${path}`, {
+type ApiOptions = {
+  method?: "GET" | "POST" | "PATCH" | "DELETE";
+  body?: unknown;
+  headers?: Record<string, string>;
+};
+
+export async function api<T = unknown>(
+  path: string,
+  options: ApiOptions = {}
+): Promise<{ data: T; response: Response }> {
+  if (!API_URL) {
+    throw new Error("Missing API_URL environment variable");
+  }
+
+  const response = await fetch(`${API_URL}${path}`, {
+    method: options.method ?? "GET",
     headers: {
-      "x-vercel-protection-bypass": API_BYPASS_TOKEN,
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...(API_BYPASS_TOKEN
+        ? { "x-vercel-protection-bypass": API_BYPASS_TOKEN }
+        : {}),
+      ...options.headers,
     },
+    body: options.body ? JSON.stringify(options.body) : undefined,
   });
-  if (!res.ok) throw new Error(`API error: ${res.status} ${path}`);
-  const json = await res.json();
-  return json.data as T;
+  if (!response.ok) throw new Error(`API error: ${response.status} ${path}`);
+  const json = await response.json();
+  return { data: json.data as T, response };
 }
