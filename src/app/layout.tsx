@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { cacheLife, cacheTag } from "next/cache";
 import "./globals.css";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Header, { HeaderSkeleton } from "@/components/header";
+import Footer, { FooterSkeleton } from "@/components/footer";
 import { api } from "@/lib/api";
 import { Suspense } from "react";
+import CartIndicator, {
+  CartIndicatorSkeleton,
+} from "@/components/cart-indicator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +28,8 @@ async function getStoreConfig() {
   "use cache";
   cacheLife("days");
   cacheTag("store-config");
-  return api<StoreConfig>("/store/config");
+  const { data } = await api<StoreConfig>("/store/config");
+  return data;
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -54,9 +58,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-black">
-        <Header />
+        <Suspense fallback={<HeaderSkeleton />}>
+          <Header>
+            <Suspense fallback={<CartIndicatorSkeleton />}>
+              <CartIndicator />
+            </Suspense>
+          </Header>
+        </Suspense>
         <main className="flex-1">{children}</main>
-        <Suspense>
+        <Suspense fallback={<FooterSkeleton />}>
           <Footer />
         </Suspense>
       </body>

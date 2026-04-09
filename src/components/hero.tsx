@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="flex flex-col md:flex-row items-center gap-8 py-16 sm:py-24">
+    <section className="flex flex-col md:flex-row items-center gap-4 md:gap-8 py-12 sm:py-16">
       <div className="flex-1">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
           Wear the framework
@@ -16,9 +16,9 @@ export default function Hero() {
         </p>
         <Link
           href="/search"
-          className="mt-8 inline-flex items-center gap-2 bg-black px-6 py-3 text-sm font-medium text-white hover:bg-gray-800"
+          className="mt-8 inline-flex items-center gap-2 rounded-md bg-black px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800 active:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
         >
-          Browse All Products →
+          Browse Products →
         </Link>
       </div>
       <div className="flex-1">
