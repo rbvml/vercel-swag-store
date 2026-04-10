@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { revalidatePath } from "next/cache";
+import { updateTag } from "next/cache";
 import { api } from "@/lib/api";
 import { getCartToken } from "@/lib/cart";
 
@@ -61,7 +61,7 @@ export async function addToCartAction(formData: FormData) {
     body: { productId, quantity },
   });
 
-  revalidatePath("/", "layout");
+  updateTag("cart");
 }
 
 export async function updateCartItemAction(
@@ -79,7 +79,7 @@ export async function updateCartItemAction(
     body: { quantity: validQuantity },
   });
 
-  revalidatePath("/", "layout");
+  updateTag("cart");
 }
 
 export async function removeCartItemAction(productId: string) {
@@ -92,5 +92,5 @@ export async function removeCartItemAction(productId: string) {
     headers: { "x-cart-token": token },
   });
 
-  revalidatePath("/", "layout");
+  updateTag("cart");
 }

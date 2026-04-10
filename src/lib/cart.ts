@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { cacheLife, cacheTag } from "next/cache";
 import { api } from "@/lib/api";
 import type { Cart } from "@/types";
 
@@ -10,6 +11,10 @@ export async function getCartToken(): Promise<string | null> {
 }
 
 export async function getCart(): Promise<Cart | null> {
+  "use cache: private";
+  cacheLife({ stale: 60 });
+  cacheTag("cart");
+
   const token = await getCartToken();
   if (!token) return null;
 
