@@ -3,6 +3,7 @@ import {
   removeCartItemAction,
   updateCartItemAction,
 } from "@/lib/cart-actions";
+import SubmitButton from "./submit-button";
 import type { CartItem as CartItemType } from "@/types";
 
 function formatPrice(cents: number, currency: string) {
@@ -41,30 +42,26 @@ export default function CartItem({ item }: { item: CartItemType }) {
 
         <div className="flex items-center gap-2">
           <form action={decrement}>
-            <button
-              type="submit"
+            <SubmitButton
               disabled={quantity <= 1}
               className="rounded-md bg-gray-200 px-3 py-1 text-sm font-medium transition-colors hover:bg-gray-300 active:bg-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               −
-            </button>
+            </SubmitButton>
           </form>
           <span className="w-8 text-center text-sm">{quantity}</span>
           <form action={increment}>
-            <button
-              type="submit"
-              className="rounded-md bg-gray-200 px-3 py-1 text-sm font-medium transition-colors hover:bg-gray-300 active:bg-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2"
-            >
+            <SubmitButton className="rounded-md bg-gray-200 px-3 py-1 text-sm font-medium transition-colors hover:bg-gray-300 active:bg-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2">
               +
-            </button>
+            </SubmitButton>
           </form>
           <form action={remove} className="ml-4">
-            <button
-              type="submit"
+            <SubmitButton
+              pendingLabel="Removing..."
               className="text-sm text-gray-500 transition-colors hover:text-black focus-visible:outline-none focus-visible:underline"
             >
               Remove
-            </button>
+            </SubmitButton>
           </form>
         </div>
       </div>

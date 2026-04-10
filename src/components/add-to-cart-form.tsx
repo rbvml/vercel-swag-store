@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import QuantitySelector from "./quantity-selector";
+import SubmitButton from "./submit-button";
 import { addToCartAction } from "@/lib/cart-actions";
 
 export default function AddToCartForm({
@@ -25,13 +26,13 @@ export default function AddToCartForm({
         max={maxQuantity}
         disabled={!inStock}
       />
-      <button
-        type="submit"
+      <SubmitButton
         disabled={!inStock}
+        pendingLabel="Adding..."
         className="mt-8 rounded-md bg-black px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800 active:bg-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         Add to Cart
-      </button>
+      </SubmitButton>
     </form>
   );
 }
