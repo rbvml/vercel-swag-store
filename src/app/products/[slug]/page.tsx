@@ -1,7 +1,6 @@
 import { Suspense } from "react";
-import ProductDetails from "@/components/product-details";
-import AddToCart from "@/components/add-to-cart";
-import { AddToCartSkeleton } from "@/components/add-to-cart";
+import ProductDetails, { ProductDetailSkeleton } from "@/components/product-details";
+import AddToCart, { AddToCartSkeleton } from "@/components/add-to-cart";
 import type { Metadata } from "next";
 import { getProductDetails } from "@/lib/products";
 import { api } from "@/lib/api";
@@ -54,7 +53,7 @@ export default function ProductDetailsPage({
   params: Promise<{ slug: string }>;
 }) {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<ProductDetailSkeleton />}>
       <ProductContent params={params} />
     </Suspense>
   );

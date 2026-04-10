@@ -23,7 +23,8 @@ export async function getCart(): Promise<Cart | null> {
       headers: { "x-cart-token": token },
     });
     return data;
-  } catch {
-    return null;
+  } catch (e) {
+    if (e instanceof Error && e.message.includes("404")) return null;
+    throw e;
   }
 }

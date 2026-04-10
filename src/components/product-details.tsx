@@ -1,6 +1,22 @@
 import Image from "next/image";
 import type { Product } from "@/types";
 
+export function ProductDetailSkeleton() {
+  return (
+    <div className="md:mx-auto md:max-w-7xl md:px-6 lg:px-8 md:py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <div className="aspect-square bg-gray-100" />
+        <div className="px-4 sm:px-6 md:px-0 pb-12 md:pb-0">
+          <div className="h-8 w-3/4 bg-gray-100" />
+          <div className="mt-4 h-4 w-full bg-gray-100" />
+          <div className="mt-2 h-4 w-2/3 bg-gray-100" />
+          <div className="mt-4 h-8 w-1/4 bg-gray-100" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ProductDetails({
   product,
   children,
