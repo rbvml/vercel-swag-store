@@ -3,7 +3,7 @@ import { Geist } from "next/font/google";
 import { cacheLife, cacheTag } from "next/cache";
 import "./globals.css";
 import Header, { HeaderSkeleton } from "@/components/header";
-import Footer, { FooterSkeleton } from "@/components/footer";
+import Footer from "@/components/footer";
 import { api } from "@/lib/api";
 import { Suspense } from "react";
 import CartIndicator, {
@@ -66,9 +66,7 @@ export default function RootLayout({
           </Header>
         </Suspense>
         <main className="flex-1">{children}</main>
-        <Suspense fallback={<FooterSkeleton />}>
-          <Footer />
-        </Suspense>
+        <Footer />
       </body>
     </html>
   );
