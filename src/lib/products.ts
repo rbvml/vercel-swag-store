@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 export async function getProductDetails(slug: string) {
   "use cache";
-  cacheLife("hours");
+  cacheLife("days");
   cacheTag(`product-${slug}`);
   try {
     const { data } = await api<Product>(`/products/${slug}`);
