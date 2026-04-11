@@ -9,7 +9,6 @@ export default async function CartIndicator() {
     <Link
       href="/cart"
       className="relative flex items-center text-gray-600 transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 rounded-sm"
-      aria-label={`Cart (${count} items)`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +20,6 @@ export default async function CartIndicator() {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        aria-hidden="true"
       >
         <circle cx="9" cy="21" r="1" />
         <circle cx="20" cy="21" r="1" />

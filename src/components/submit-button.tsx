@@ -22,7 +22,6 @@ export default function SubmitButton({
     <button
       type="submit"
       disabled={isDisabled}
-      aria-disabled={isDisabled}
       className={className}
     >
       {pending && pendingLabel ? pendingLabel : children}

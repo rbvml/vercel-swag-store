@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import { type Category } from "@/types";
 
 function buildUrl(q: string, cat: string) {
@@ -27,6 +27,7 @@ export default function SearchForm({
   const [category, setCategory] = useState(initialCategory);
   const [prevInitialQuery, setPrevInitialQuery] = useState(initialQuery);
   const [prevInitialCategory, setPrevInitialCategory] = useState(initialCategory);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   if (initialQuery !== prevInitialQuery) {
     setQuery(initialQuery);
@@ -41,19 +42,22 @@ export default function SearchForm({
     if (query === initialQuery && category === initialCategory) return;
     if (query.length > 0 && query.length < 3) return;
 
-    const timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       startTransition(() => {
         router.replace(buildUrl(query, category));
       });
     }, 300);
 
-    return () => clearTimeout(timer);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [query, category, initialQuery, initialCategory, router]);
 
   function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     if (isPending) return;
     if (query === initialQuery && category === initialCategory) return;
+    if (timerRef.current) clearTimeout(timerRef.current);
     startTransition(() => {
       router.replace(buildUrl(query, category));
     });
