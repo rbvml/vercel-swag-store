@@ -19,11 +19,12 @@ async function searchProducts(q?: string, category?: string) {
 }
 
 export default async function SearchResults({
-  searchParams,
+  q,
+  category,
 }: {
-  searchParams: Promise<{ q?: string; category?: string }>;
+  q?: string;
+  category?: string;
 }) {
-  const { q, category } = await searchParams;
   const products = await searchProducts(q, category);
 
   if (products.length === 0) {

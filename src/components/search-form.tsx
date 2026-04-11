@@ -25,6 +25,17 @@ export default function SearchForm({
 
   const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState(initialCategory);
+  const [prevInitialQuery, setPrevInitialQuery] = useState(initialQuery);
+  const [prevInitialCategory, setPrevInitialCategory] = useState(initialCategory);
+
+  if (initialQuery !== prevInitialQuery) {
+    setQuery(initialQuery);
+    setPrevInitialQuery(initialQuery);
+  }
+  if (initialCategory !== prevInitialCategory) {
+    setCategory(initialCategory);
+    setPrevInitialCategory(initialCategory);
+  }
 
   useEffect(() => {
     if (query === initialQuery && category === initialCategory) return;
@@ -41,6 +52,8 @@ export default function SearchForm({
 
   function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (isPending) return;
+    if (query === initialQuery && category === initialCategory) return;
     startTransition(() => {
       router.replace(buildUrl(query, category));
     });
@@ -75,5 +88,15 @@ export default function SearchForm({
         {isPending ? "Searching..." : "Search"}
       </button>
     </form>
+  );
+}
+
+export function SearchFormSkeleton() {
+  return (
+    <div className="mt-8 flex flex-col sm:flex-row gap-2">
+      <div className="flex-1 h-[42px] rounded-md bg-gray-100" />
+      <div className="h-[42px] w-40 rounded-md bg-gray-100" />
+      <div className="h-[42px] min-w-32 rounded-md bg-gray-100" />
+    </div>
   );
 }
