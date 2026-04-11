@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { cacheLife, cacheTag } from "next/cache";
 import "./globals.css";
-import Header, { HeaderSkeleton } from "@/components/header";
+import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { api } from "@/lib/api";
 import { Suspense } from "react";
@@ -58,13 +58,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-black">
-        <Suspense fallback={<HeaderSkeleton />}>
-          <Header>
-            <Suspense fallback={<CartIndicatorSkeleton />}>
-              <CartIndicator />
-            </Suspense>
-          </Header>
-        </Suspense>
+        <Header>
+          <Suspense fallback={<CartIndicatorSkeleton />}>
+            <CartIndicator />
+          </Suspense>
+        </Header>
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
