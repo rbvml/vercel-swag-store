@@ -43,7 +43,7 @@ async function SearchContent({
           initialCategory={category}
         />
       </div>
-      <Suspense key={`${q}-${category}`} fallback={<SearchResultsSkeleton />}>
+      <Suspense fallback={<SearchResultsSkeleton />}>
         <SearchResults q={q} category={category} />
       </Suspense>
     </>
