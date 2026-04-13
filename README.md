@@ -13,7 +13,7 @@
 
 - The app uses Server Components by default for page rendering and data fetching.
 - Product, category, promotion, and store configuration reads go through `src/lib/api.ts` and are cached explicitly with `use cache`, `cacheLife`, and `cacheTag` where freshness requirements allow it.
-- Cart mutations use Server Actions in `src/lib/cart-actions.ts`; the cart token is stored in an `httpOnly` cookie and layout revalidation keeps the cart badge in sync after writes.
+- Cart mutations use Server Actions in `src/lib/cart-actions.ts`; the cart token is stored in an `httpOnly` cookie and `updateTag("cart")` keeps the cart badge in sync after writes.
 - Interactive UI is isolated to the smallest possible client surface area, mainly navigation state and form interactions.
 
 ## Why This Structure
