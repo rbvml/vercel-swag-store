@@ -26,7 +26,7 @@ type StoreConfig = {
 
 async function getStoreConfig() {
   "use cache";
-  cacheLife("days");
+  cacheLife("weeks");
   cacheTag("store-config");
   const { data } = await api<StoreConfig>("/store/config");
   return data;

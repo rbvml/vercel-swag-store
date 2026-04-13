@@ -7,7 +7,7 @@ const MAX_SEARCH_RESULTS = 5;
 
 async function searchProducts(q?: string, category?: string) {
   "use cache";
-  cacheLife("hours");
+  cacheLife("days");
   cacheTag("products");
 
   const params = new URLSearchParams({ limit: `${MAX_SEARCH_RESULTS}` });

@@ -15,7 +15,7 @@ type SearchPageParams = {
 
 async function getCategories() {
   "use cache";
-  cacheLife("days");
+  cacheLife("weeks");
   cacheTag("categories");
   const { data } = await api<Category[]>("/categories");
   return data;
