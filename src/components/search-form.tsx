@@ -30,11 +30,11 @@ export default function SearchForm({
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   if (initialQuery !== prevInitialQuery) {
-    setQuery(initialQuery);
+    if (query === prevInitialQuery) setQuery(initialQuery);
     setPrevInitialQuery(initialQuery);
   }
   if (initialCategory !== prevInitialCategory) {
-    setCategory(initialCategory);
+    if (category === prevInitialCategory) setCategory(initialCategory);
     setPrevInitialCategory(initialCategory);
   }
 
