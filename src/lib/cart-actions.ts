@@ -44,7 +44,6 @@ async function ensureCartToken(): Promise<string> {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24,
     secure: process.env.NODE_ENV === "production",
   });
   return token;
