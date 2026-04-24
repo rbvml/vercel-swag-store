@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: "Search",
 };
 
-async function SearchContent({
+async function SearchFormContent({
   searchParams,
   categories,
 }: {
@@ -35,19 +35,24 @@ async function SearchContent({
   const { q = "", category = "" } = await searchParams;
 
   return (
-    <>
-      <div className="mt-8">
-        <SearchForm
-          categories={categories}
-          initialQuery={q}
-          initialCategory={category}
-        />
-      </div>
-      <Suspense fallback={<SearchResultsSkeleton />}>
-        <SearchResults q={q} category={category} />
-      </Suspense>
-    </>
+    <div className="mt-8">
+      <SearchForm
+        categories={categories}
+        initialQuery={q}
+        initialCategory={category}
+      />
+    </div>
   );
+}
+
+async function SearchResultsContent({
+  searchParams,
+}: {
+  searchParams: Promise<SearchPageParams>;
+}) {
+  const { q = "", category = "" } = await searchParams;
+
+  return <SearchResults q={q} category={category} />;
 }
 
 export default async function SearchPage({
@@ -63,18 +68,14 @@ export default async function SearchPage({
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-3xl font-bold">Search Products</h1>
-      <Suspense
-        fallback={
-          <>
-            <SearchFormSkeleton />
-            <SearchResultsSkeleton />
-          </>
-        }
-      >
-        <SearchContent
+      <Suspense fallback={<SearchFormSkeleton />}>
+        <SearchFormContent
           searchParams={searchParams}
           categories={sortedCategories}
         />
+      </Suspense>
+      <Suspense fallback={<SearchResultsSkeleton />}>
+        <SearchResultsContent searchParams={searchParams} />
       </Suspense>
     </div>
   );
