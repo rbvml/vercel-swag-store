@@ -37,8 +37,12 @@ export default async function SearchResults({
 
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {products.map((product, index) => (
+        <ProductCard
+          key={product.id}
+          product={product}
+          preload={index === 0}
+        />
       ))}
     </div>
   );

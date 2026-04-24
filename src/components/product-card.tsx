@@ -4,10 +4,10 @@ import { type Product } from "@/types";
 
 export default function ProductCard({
   product,
-  priority = false,
+  preload = false,
 }: {
   product: Product;
-  priority?: boolean;
+  preload?: boolean;
 }) {
   return (
     <Link href={`/products/${product.slug}`}>
@@ -18,7 +18,7 @@ export default function ProductCard({
           fill
           className="object-contain"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority={priority}
+          preload={preload}
         />
       </div>
       <h3 className="mt-3 text-sm font-normal">{product.name}</h3>

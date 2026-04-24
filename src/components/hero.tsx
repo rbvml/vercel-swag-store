@@ -27,7 +27,7 @@ export default function Hero() {
           alt="Minimal Black Backpack"
           width={500}
           height={500}
-          priority
+          preload
         />
       </div>
     </section>

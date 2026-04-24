@@ -41,7 +41,7 @@ export default function ProductDetails({
             fill
             className="object-contain"
             sizes="(max-width: 768px) 100vw, 50vw"
-            priority
+            preload
           />
         </div>
         <div className="px-4 sm:px-6 md:px-0 pb-12 md:pb-0">

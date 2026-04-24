@@ -22,7 +22,7 @@ export default async function FeaturedProducts() {
           <ProductCard
             key={product.id}
             product={product}
-            priority={index === 0}
+            preload={index === 0}
           />
         ))}
       </div>
