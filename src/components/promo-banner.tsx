@@ -13,14 +13,15 @@ type Promotion = {
 };
 
 async function getPromotions() {
-  "use cache";
-  cacheLife("minutes");
-  cacheTag("promotions");
   const { data } = await api<Promotion>("/promotions");
   return data;
 }
 
 export default async function PromoBanner() {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("promotions");
+
   const { title, description, code } = await getPromotions();
 
   return (

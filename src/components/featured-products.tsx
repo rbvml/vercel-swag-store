@@ -4,14 +4,15 @@ import ProductCard from "./product-card";
 import { type Product } from "@/types";
 
 async function getFeaturedProducts() {
-  "use cache";
-  cacheLife("days");
-  cacheTag("products");
   const { data } = await api<Product[]>("/products?featured=true&limit=6");
   return data;
 }
 
 export default async function FeaturedProducts() {
+  "use cache";
+  cacheLife("days");
+  cacheTag("products");
+
   const products = await getFeaturedProducts();
 
   return (

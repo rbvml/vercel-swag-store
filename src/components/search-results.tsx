@@ -6,10 +6,6 @@ import { cacheLife, cacheTag } from "next/cache";
 const MAX_SEARCH_RESULTS = 5;
 
 async function searchProducts(q?: string, category?: string) {
-  "use cache";
-  cacheLife("days");
-  cacheTag("products");
-
   const params = new URLSearchParams({ limit: `${MAX_SEARCH_RESULTS}` });
   if (q) params.set("search", q);
   if (category) params.set("category", category);
@@ -25,6 +21,10 @@ export default async function SearchResults({
   q?: string;
   category?: string;
 }) {
+  "use cache";
+  cacheLife("days");
+  cacheTag("products");
+
   const products = await searchProducts(q, category);
 
   if (products.length === 0) {
