@@ -21,7 +21,7 @@ export default async function SearchResults({
   q?: string;
   category?: string;
 }) {
-  "use cache";
+  "use cache: remote";
   cacheLife("days");
   cacheTag("products");
 
