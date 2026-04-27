@@ -9,10 +9,16 @@
 3. Set `API_URL` and, when needed for protected preview deployments, `API_BYPASS_TOKEN`.
 4. Start the app with `npm run dev`.
 
+## Deployment
+
+- Production: https://vercel-swag-store-nine.vercel.app/
+
 ## Architecture
 
 - The app uses Server Components by default for page rendering and data fetching.
-- Product, category, promotion, and store configuration reads go through `src/lib/api.ts` and are cached explicitly with `use cache`, `cacheLife`, and `cacheTag` where freshness requirements allow it.
+- Product, category, promotion, and store configuration reads go through `src/lib/api.ts` and use Cache Components with `use cache`, `cacheLife`, and `cacheTag` where freshness requirements allow it.
+- Search results use `use cache: remote` because they are URL-parameter-driven runtime data running on serverless functions.
+- Cart reads use `use cache: private` because they depend on the session cart cookie.
 - Cart mutations use Server Actions in `src/lib/cart-actions.ts`; the cart token is stored in an `httpOnly` cookie and `updateTag("cart")` keeps the cart badge in sync after writes.
 - Interactive UI is isolated to the smallest possible client surface area, mainly navigation state and form interactions.
 
